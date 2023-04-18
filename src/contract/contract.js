@@ -1,11 +1,14 @@
 // Load ethers library
 import { ethers } from 'ethers';
+
+import { Web3Provider } from '@ethersproject/providers';
+
 // Load detectEthereumProvider
-import detectEthereumProvider from '@metamask/detect-provider';
+// import detectEthereumProvider from '@metamask/detect-provider';
 
 // Load the ABI of the StakingContract
 import contractABI from './abi.json';
-const abi = contractABI.abi; // Copy and paste the ABI here
+const abi = contractABI; // Copy and paste the ABI here
 
 // Set the address of the deployed contract
 const contractAddress = "0x0946FdAA8327D75f544A753B654F3B143CDd38D8"; // Replace with the address of your deployed contract
@@ -13,11 +16,13 @@ const contractAddress = "0x0946FdAA8327D75f544A753B654F3B143CDd38D8"; // Replace
 // Export the contract functions
 export async function getStakingContract() {
   // Connect to the blockchain network using Metamask provider
-  const provider = await detectEthereumProvider();
+  const provider = new Web3Provider(window.ethereum);
   // Get the contract instance
-  const stakingContract = new ethers.Contract(contractAddress, abi, provider.getSigner());
+  const signer = provider.getSigner();
+  const stakingContract = new ethers.Contract(contractAddress, abi, signer);
   return stakingContract;
 }
+
 
 // Perform staking
 export async function stake(amount) {
