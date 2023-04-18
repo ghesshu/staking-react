@@ -10,7 +10,7 @@ const HomeContent = () => {
   
 
   const [address, setAddress] = useState("");
-  const [cerror, setCerror]v= useState("")
+  const [cerror, setCerror]= useState("");
   const [bal, setBal] = useState('');
   const amountRef = useRef();
 
